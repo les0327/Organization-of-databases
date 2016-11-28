@@ -75,7 +75,7 @@ public class ProfileDAO implements GenericDAO<Profile, Integer> {
 
         Profile profile = null;
 
-        try(PreparedStatement statement = connection.prepareStatement(query);){
+        try(PreparedStatement statement = connection.prepareStatement(query)){
 
             statement.setInt(1, key);
 
@@ -128,7 +128,19 @@ public class ProfileDAO implements GenericDAO<Profile, Integer> {
      */
     @Override
     public void update(Profile entity) throws SQLException {
+        String query = "UPDATE profile SET name=?, email=?, phone=?, gender_id=?, password=?, permission_id=? WHERE id=?";
 
+        try(PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setString(1, entity.getName());
+            statement.setString(2, entity.getEmail());
+            statement.setString(3, entity.getPhoneNumber());
+            statement.setInt(4, entity.getGender().equals("male")? 1 : 2);
+            statement.setString(5, entity.getPassword());
+            statement.setInt(6, entity.getPermission().equals("user")? 1 : 2);
+            statement.setInt(7, entity.getID());
+
+            statement.executeUpdate();
+        }
     }
 
     /**

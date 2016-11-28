@@ -46,6 +46,11 @@ public class Main {
 
             Arrays.asList(profileDAO.getAll()).forEach(System.out::println);
 
+            profile5.setName("Vova");
+            profile5.setPermission("user");
+
+            profileDAO.update(profile5);
+
             System.out.println("\nDelete from data base from data base profile with id 5");
             profileDAO.delete(5);
 
